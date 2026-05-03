@@ -120,8 +120,6 @@ export function useNecesidadById(id) {
 
   useEffect(() => {
     if (!id) return
-    setLoading(true)
-    setError(null)
 
     Promise.all([
       getDonacionesByNecesidad(Number(id)).catch(() => null),

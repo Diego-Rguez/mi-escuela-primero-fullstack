@@ -203,7 +203,7 @@ function Form() {
           }
         }
       })
-    } catch (err) {
+    } catch {
       setSubmitError('Ocurrió un error al enviar tu solicitud. Por favor intenta de nuevo.')
       setSubmitting(false)
     }

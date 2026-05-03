@@ -204,7 +204,7 @@ function AdminContent({ token, onLogout }) {
   const [aplicacionDetalle,  setAplicacionDetalle]  = useState(null)
   const [showNotifications,  setShowNotifications]  = useState(false)
   const [apps,               setApps]               = useState([])
-  const [loadingApps,        setLoadingApps]        = useState(false)
+  const [loadingApps,        setLoadingApps]        = useState(true)
   const [appsError,          setAppsError]          = useState(null)
   const [proyectos,          setProyectos]          = useState([])
   const [proyectoEditar,     setProyectoEditar]     = useState(null)
@@ -214,12 +214,12 @@ function AdminContent({ token, onLogout }) {
 
   // Sync proyectos from API
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (proyectosAPI.length > 0) setProyectos(proyectosAPI)
   }, [proyectosAPI])
 
   // Fetch donaciones + donaciones económicas + aliados on mount
   useEffect(() => {
-    setLoadingApps(true)
     Promise.all([getDonaciones(token), getDonacionesEconomicas(token), getAliados(token)])
       .then(([donaciones, economicas, aliados]) => {
         const aliadoMap = {}
@@ -280,17 +280,6 @@ function AdminContent({ token, onLogout }) {
     } catch {
       // keep current state on error
     }
-  }
-
-  // ── File upload ──────────────────────────────────────────────────────────
-  const [selectedFile,  setSelectedFile]  = useState(null)
-  const [uploadSuccess, setUploadSuccess] = useState(false)
-
-  const handleUpload = () => {
-    if (!selectedFile) return
-    setUploadSuccess(true)
-    setSelectedFile(null)
-    setTimeout(() => setUploadSuccess(false), 4000)
   }
 
   // ── Computed metrics ─────────────────────────────────────────────────────
